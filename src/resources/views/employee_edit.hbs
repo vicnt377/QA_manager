@@ -13,9 +13,7 @@
             font-weight: bold;
         }
 
-        .form-label {
-        font-weight: bold;
-    }
+    
     </style>
 </head>
 <body>
@@ -24,15 +22,15 @@
 
         <form method="post" action="/employee/edit/{{employee._id}}">
             <div class="mb-3">
-                <label for="employeeName" class="form-label ">Tên</label>
-                <input type="text" class="form-control" id="employeeName" name="name" value="{{employee.name}}" required>
+                <label for="employeeName" class="form-label fw-bold ">Tên</label>
+                <input type="text" class="form-control " id="employeeName" name="name" value="{{employee.name}}" required>
             </div>
             <div class="mb-3">
-                <label for="employeeEmail" class="form-label">Email</label>
+                <label for="employeeEmail" class="form-label fw-bold">Email</label>
                 <input type="email" class="form-control" id="employeeEmail" name="email" value="{{employee.email}}" required>
             </div>
             <div class="mb-3">
-                <label for="employeePosition" class="form-label">Vị trí</label>
+                <label for="employeePosition" class="form-label fw-bold">Vị trí</label>
                 <input type="text" class="form-control" id="employeePosition" name="position" value="{{employee.position}}" required>
             </div>
 
