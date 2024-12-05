@@ -59,12 +59,8 @@
                                 onclick="hideEmployee('{{this._id}}')">
                                 Ẩn
                             </button>
-                            {{!-- <button 
-                                class="btn btn-warning" 
-                                onclick="openEditModal({{this_id}})">
-                                Chỉnh Sửa
-                            </button> --}}
-
+                            <a href="/employee/edit/{{this._id}}" 
+                            class="btn btn-warning btn-sm">Chỉnh Sửa</a>
                         </td>
                     </tr>
                     {{/each}}
@@ -103,66 +99,6 @@
         </div>
     </div>
 
-    <!-- Modal chỉnh sửa nhân viên -->
-    {{!-- <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="editEmployeeModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editEmployeeModalLabel">Chỉnh Sửa Nhân Viên</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" action="/employee/edit/{{employee._id}}" id="editEmployeeForm">
-                    <div class="mb-3">
-                        <label for="editEmployeeName" class="form-label">Tên</label>
-                        <input 
-                            type="text" 
-                            class="form-control" 
-                            id="editEmployeeName" 
-                            name="name" 
-                            value="{{employee.name}}" 
-                            required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editEmployeeEmail" class="form-label">Email</label>
-                        <input 
-                            type="email" 
-                            class="form-control" 
-                            id="editEmployeeEmail" 
-                            name="email" 
-                            value="{{employee.email}}" 
-                            required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editEmployeePosition" class="form-label">Vị trí</label>
-                        <input 
-                            type="text" 
-                            class="form-control" 
-                            id="editEmployeePosition" 
-                            name="position" 
-                            value="{{employee.position}}" 
-                            required>
-                    </div>
-                    {{!-- <div class="mb-3">
-                        <label for="editEmployeeStatus" class="form-label">Trạng Thái</label>
-                        <select 
-                            class="form-select" 
-                            id="editEmployeeStatus" 
-                            name="isBlocked" 
-                            required>
-                            <option value="false" {{#if (eq employee.isBlocked false)}}selected{{/if}}>Hoạt Động</option>
-                            <option value="true" {{#if (eq employee.isBlocked true)}}selected{{/if}}>Ẩn</option>
-                        </select>
-                    </div> --}}
-                    
-                    <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    </div> --}}
-
-
 <!-- Footer -->
     <footer class="mt-4 text-center py-3" style="background-color: #343a40; color: white;">
         <p>Thông tin liên hệ:</p>
@@ -181,20 +117,6 @@
                 window.location.reload();
             });
         }
-
-        // chỉnh sửa nhân viên
-        {{!-- function openEditModal(employee) {
-            console.log(employee);
-            // Gán giá trị từ employee object vào các trường trong modal
-            document.getElementById('editEmployeeName').value = employee.name;
-            document.getElementById('editEmployeeEmail').value = employee.email;
-            document.getElementById('editEmployeePosition').value = employee.position;
-            document.getElementById('editEmployeeForm').action = `/employee/edit/${employee._id}`;
-
-            // Hiển thị modal
-            const editModal = new bootstrap.Modal(document.getElementById('editEmployeeModal'));
-            editModal.show();
-        } --}}
 
     </script>
 </body>

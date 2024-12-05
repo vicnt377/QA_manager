@@ -18,11 +18,10 @@ router.get('/hidden', employeeController.getHiddenEmployees);
 // Khôi phục nvien
 router.put('/restore/:id', employeeController.restoreEmployee);
 
-// // Hiển thị trang chỉnh sửa nhân viên
-// router.get('/edit/:id', employeeController.editEmployeePage);
+// Hiển thị trang chỉnh sửa nhân viên
+router.get('/edit/:id', employeeController.editEmployeePage);
 
 // Xử lý cập nhật nhân viên
-// router.post('/edit/:id', employeeController.editEmployee);
-
+router.post('/edit/:id', employeeController.editEmployee);
 
 module.exports = router

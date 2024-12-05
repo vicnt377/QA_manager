@@ -79,32 +79,40 @@ class EmployeeController {
             next(error);
         }
     }
+    
+    // Hiển thị trang chỉnh sửa nhân viên
+    async editEmployeePage(req, res, next) {
+        try {
+            const employeeId = req.params.id; // Lấy ID từ route params
+            const employee = await Employee.findById(employeeId);
 
-    // Chỉnh sửa nhân viên
-    // async editEmployee(req, res, next) {
-    //     try {
-    //         const employeeId = req.params.id;
-    //         const updatedData = req.body;
-            
-    //         // Cập nhật nhân viên
-    //         const employee = await Employee.findByIdAndUpdate(employeeId, updatedData, { new: true });
-    
-    //         // Nếu không tìm thấy nhân viên
-    //         if (!employee) {
-    //             return res.status(404).send('Nhân viên không tồn tại');
-    //         }
-    
-    //         // Nếu muốn hiển thị lại danh sách nhân viên sau khi cập nhật
-    //         const employees = await Employee.find({}); // Lấy lại danh sách tất cả nhân viên
-    //         const employeeList = employees.map(emp => emp.toObject()); // Chuyển tất cả nhân viên thành object
-    //         res.render('employee_list', { employees: employeeList });
-    
-    //     } catch (error) {
-    //         next(error);
-    //     }
-    //}
-    
-    
+            if (!employee) {
+                return res.status(404).send('Nhân viên không tồn tại');
+            }
+
+            res.render('employee_edit', { employee: employee.toObject() }); // Truyền dữ liệu nhân viên vào view
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    // Cập nhật thông tin nhân viên
+    async editEmployee(req, res, next) {
+        try {
+            const employeeId = req.params.id; // Lấy ID từ route params
+            const updatedData = req.body; // Lấy dữ liệu mới từ biểu mẫu
+
+            const employee = await Employee.findByIdAndUpdate(employeeId, updatedData, { new: true });
+
+            if (!employee) {
+                return res.status(404).send('Nhân viên không tồn tại');
+            }
+
+            res.redirect('/employee/list'); // Quay về trang danh sách nhân viên sau khi cập nhật
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 module.exports = new EmployeeController();

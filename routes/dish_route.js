@@ -4,7 +4,7 @@ const router = express.Router()
 const dishController = require('../controllers/DishController')
 
 
-router.get('/dish',dishController.index)
+router.get('/add',dishController.)
 
 
 module.exports = router

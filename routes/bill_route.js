@@ -4,7 +4,7 @@ const router = express.Router()
 const billController = require('../controllers/BillController')
 
 
-router.get('/create',billController.index)
+// router.get('/create',billController.index)
 
 
 module.exports = router

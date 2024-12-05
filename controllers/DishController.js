@@ -1,9 +1,8 @@
 const Dish = require('../models/Dish');
+const { mutipleMongooseToOject } = require('../src/util/mongoose');
 
 class DishController{
-    index(req,res){
-        res.render('add_dish')
-    }
+    
 }
 
-module.exports = new dishController;
+module.exports = new DishController();
