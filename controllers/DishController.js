@@ -16,15 +16,25 @@ class DishController{
     // Thêm món
     async addDish(req, res, next) {
         try {
-            const { name, description, price } = req.body;
-            const image = req.file ? `/uploads/${req.file.filename}` : ''; // Lấy đường dẫn file ảnh
+            const { name, price, description } = req.body;
     
-            const newDish = new Dish({ name, category, price, image });
-            await newDish.save();
+            // Kiểm tra file ảnh
+            if (!req.file) {
+                return res.status(400).send('Vui lòng tải lên ảnh món ăn.');
+            }
     
-            res.redirect('/dish/list');
+            // Tạo món ăn mới
+            const newDish = new Dish({
+                name,
+                price,
+                description,
+                image: `/uploads/${req.file.filename}` // Lưu đường dẫn file
+            });
+    
+            await newDish.save(); // Lưu vào database
+            res.redirect('/dish/list'); // Chuyển hướng sau khi thêm thành công
         } catch (error) {
-            next(error);
+            next(error); // Xử lý lỗi
         }
     }
     

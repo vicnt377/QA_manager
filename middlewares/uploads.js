@@ -1,29 +1,27 @@
 const multer = require('multer');
 const path = require('path');
 
-// Cấu hình nơi lưu trữ và tên file
+// Cấu hình lưu trữ cho Multer
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/'); // Thư mục lưu ảnh
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/'); // Đường dẫn thư mục lưu ảnh
     },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname)); // Định dạng tên file
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}-${file.originalname}`); // Tên file được lưu
     }
 });
 
-// Middleware Multer
 const upload = multer({
     storage: storage,
-    fileFilter: function (req, file, cb) {
-        const filetypes = /jpeg|jpg|png|gif/;
-        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-        const mimetype = filetypes.test(file.mimetype);
+    fileFilter: (req, file, cb) => {
+        const fileTypes = /jpeg|jpg|png|gif/;
+        const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+        const mimetype = fileTypes.test(file.mimetype);
 
-        if (mimetype && extname) {
-            return cb(null, true);
+        if (extname && mimetype) {
+            cb(null, true);
         } else {
-            cb(new Error('Chỉ cho phép tải lên các file hình ảnh (jpeg, jpg, png, gif)'));
+            cb(new Error('Chỉ hỗ trợ định dạng ảnh .jpeg, .jpg, .png, .gif'));
         }
     }
 });
