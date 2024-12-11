@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hóa Đơn</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .header {
+            margin-top: 3rem;
+        }
+        .header h1 {
+            color: #ff6200;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5 header">
+        <h1 class="text-center">Hóa Đơn</h1>
+        
+        <!-- Thông tin số bàn -->
+        <div class="mb-3">
+            <label for="tableNumber" class="form-label"><strong>Số Bàn</strong></label>
+            <input type="text" class="form-control" id="tableNumber" value="{{bill.tableNumber}}" disabled>
+        </div>
+
+        <!-- Danh sách món ăn và số lượng -->
+        <h3>Danh Sách Món Ăn</h3>
+
+        <div class="text-end mb-3">
+            <a href="/bill/list" class="btn btn-secondary">
+                Danh sách hóa đơn
+            </a>
+        </div>
+
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Tên Món</th>
+                    <th>Số Lượng</th>
+                    <th>Đơn Giá</th>
+                    <th>Tổng Tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each bill.items}}
+                <tr>
+                    <td>{{this.dish.name}}</td>
+                    <td>{{this.quantity}}</td>
+                    <td>{{this.dish.price}} VND</td>
+                    <td>{{multiply this.dish.price this.quantity}} VND</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+        <!-- Tổng Tiền -->
+        <div class="mb-3">
+            <label for="totalAmount" class="form-label"><strong>Tổng Tiền</strong></label>
+            <input type="text" class="form-control" id="totalAmount" value="{{bill.totalAmount}} VND" disabled>
+        </div>
+
+        <!-- Nút In Hóa Đơn -->
+        <div class="text-center mt-4">
+            <button class="btn btn-success" onclick="window.print()">In Hóa Đơn</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

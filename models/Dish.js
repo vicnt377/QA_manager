@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const dishSchema = new mongoose.Schema({
     name: { type: String, required: true },
     price: { type: Number, default: 0 },
-    image: { type: String }, // URL to the dish image
+    //image: { type: String },
     description: { type: String },
     isHidden: { type: Boolean, default: false },
 });

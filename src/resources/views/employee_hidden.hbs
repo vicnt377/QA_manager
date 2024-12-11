@@ -45,7 +45,7 @@
                 <tbody id="employeeTable">
                     {{#each employees}}
                     <tr>
-                        <td>{{@index}}</td>
+                        <td>{{shortId this._id}}</td>
                         <td>{{this.name}}</td>
                         <td>{{this.email}}</td>
                         <td>{{this.position}}</td>
@@ -58,13 +58,6 @@
             </table>
         </div>
     </div>
-
-<!-- Footer -->
-    <footer class="mt-4 text-center py-3" style="background-color: #343a40; color: white;">
-        <p>Thông tin liên hệ:</p>
-        <p><i class="fa-solid fa-phone"></i> 0123456789</p>
-        <p><i class="fa-solid fa-location-dot"></i> 370 đường 3/2, p.Xuân Khánh, q.Ninh Kiều, tp.Cần Thơ</p>
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 

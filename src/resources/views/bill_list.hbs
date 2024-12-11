@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Hóa Đơn</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .header {
+            margin-top: 3rem;
+        }
+        .header h1 {
+            color: #ff6200;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Header -->
+        <div class="row header mb-4">
+            <h1 class="text-center">Danh Sách Hóa Đơn</h1>
+        </div>
+
+        <!-- Table Hiển Thị Hóa Đơn -->
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Số Bàn</th>
+                    <th>Món Ăn</th>
+                    <th>Số Lượng</th>
+                    <th>Tổng Tiền</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each bills}}
+                <tr>
+                    <td>{{this.tableNumber}}</td>
+                    <td>
+                        {{#each this.items}}
+                            <p>{{this.dish.name}}</p> 
+                        {{/each}}
+                    </td>
+                    <td>
+                        {{#each this.items}}
+                            <p>{{this.quantity}} Món</p>
+                        {{/each}}
+                    </td>
+                    <td>{{this.totalAmount}} VND</td>
+                    <td><button class="btn btn-warning btn-sm" type="button">Chi tiết</button></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+        <div class="text-center">
+            <a href="/bill/create" class="btn btn-primary">Tạo Hóa Đơn Mới</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

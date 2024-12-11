@@ -19,16 +19,15 @@ class DishController{
             const { name, price, description } = req.body;
     
             // Kiểm tra file ảnh
-            if (!req.file) {
-                return res.status(400).send('Vui lòng tải lên ảnh món ăn.');
-            }
+            // if (!req.file) {
+            //     return res.status(400).send('Vui lòng tải lên ảnh món ăn.');
+            // }
     
             // Tạo món ăn mới
             const newDish = new Dish({
                 name,
                 price,
-                description,
-                image: `/uploads/${req.file.filename}` // Lưu đường dẫn file
+                description
             });
     
             await newDish.save(); // Lưu vào database
@@ -92,10 +91,34 @@ class DishController{
     }
 
     // Hiển thị trang chỉnh sửa món
-    async editDishPage(req, res, next) {}
+    async editDishPage(req, res, next) {
+        try {
+            const dishId = req.params.id;
+            const dish = await Dish.findById(dishId);
+            if (!dish) {
+                return res.status(404).send('Món ăn không tồn tại.');
+            }
+            res.render('dish_edit', { dish: dish.toObject() });
+        } catch (error) {
+            next(error);
+        }
+    }
 
     // Cập nhật món
-    async editDish(req, res, next) {}
+    async editDish(req, res, next) {
+        try {
+            const dishId = req.params.id;
+            const { name, price, description } = req.body;
+
+            // Cập nhật thông tin món ăn
+            await Dish.findByIdAndUpdate(dishId, { name, price, description });
+
+            // Chuyển hướng về danh sách món ăn
+            res.redirect('/dish/list');
+        } catch (error) {
+            next(error);
+        }
+    }
     
 }
 

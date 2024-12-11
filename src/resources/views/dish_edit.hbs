@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh Sửa Món Ăn</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .header {
+            margin-top: 3rem;
+        }
+        .header h1 {
+            color: #ff6200;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5 header">
+        <h1 class="text-center">Chỉnh Sửa Món Ăn</h1>
+        <form action="/dish/edit/{{dish._id}}" method="POST">
+            <div class="mb-3">
+                <label for="dishName" class="form-label">Tên món</label>
+                <input type="text" class="form-control" id="dishName" name="name" value="{{dish.name}}" required>
+            </div>
+            <div class="mb-3">
+                <label for="dishPrice" class="form-label">Giá</label>
+                <input type="number" class="form-control" id="dishPrice" name="price" value="{{dish.price}}" required>
+            </div>
+            <div class="mb-3">
+                <label for="dishDescription" class="form-label">Mô tả</label>
+                <input type="text" class="form-control" id="dishDescription" name="description" value="{{dish.description}}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Cập Nhật</button>
+            <a href="/dish/list" class="btn btn-secondary">Quay Lại</a>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

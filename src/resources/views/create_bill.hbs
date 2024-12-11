@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Hóa Đơn</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .header {
+            margin-top: 3rem;
+        }
+        .header h1 {
+            color: #ff6200;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Header -->
+        <div class="row header mb-4">
+            <h1 class="text-center">Tạo Hóa Đơn</h1>
+        </div>
+
+        <!-- Form Tạo Hóa Đơn -->
+        <form method="POST" action="/bill/create">
+            <div class="mb-3">
+                <label for="tableNumber" class="form-label"><strong>Số Bàn</strong></label>
+                <input type="text" class="form-control" id="tableNumber" name="tableNumber" placeholder="Nhập số bàn" required>
+            </div>
+
+            <!-- Món Ăn -->
+            <div id="dishContainer">
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <label for="dish0" class="form-label"><strong>Chọn Món Ăn</strong></label>
+                        <select class="form-select" id="dish0" name="items[0][dish]" required>
+                            <option value="" disabled selected>-- Chọn Món --</option>
+                            {{#each dishes}}
+                            <option value="{{this._id}}">{{this.name}} - {{this.price}} VND</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="quantity0" class="form-label"><strong>Số Lượng</strong></label>
+                        <input type="number" class="form-control" id="quantity0" name="items[0][quantity]" min="1" value="1" required>
+                    </div>
+                    <div class="col-md-1 d-flex align-items-end">
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeDish(this)">Xóa</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút Thêm Món -->
+            <button type="button" id="addDishBtn" class="btn btn-secondary mb-3" onclick="addDish()">Thêm Món</button>
+
+            <!-- Tổng tiền -->
+            <div class="mb-3">
+                <label for="totalAmount" class="form-label"><strong>Tổng Tiền (Tự Động Tính)</strong></label>
+                <input type="text" class="form-control" id="totalAmount" name="totalAmount" disabled>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Tạo Hóa Đơn</button>
+        </form>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        let dishIndex = 1;
+
+        function addDish() {
+            const dishContainer = document.getElementById('dishContainer');
+            const row = document.createElement('div');
+            row.classList.add('row', 'mb-3');
+            row.innerHTML = `
+                <div class="col-md-8">
+                    <label for="dish${dishIndex}" class="form-label"><strong>Chọn Món Ăn</strong></label>
+                    <select class="form-select" id="dish${dishIndex}" name="items[${dishIndex}][dish]" required>
+                        <option value="" disabled selected>-- Chọn Món --</option>
+                        {{#each dishes}}
+                        <option value="{{this._id}}">{{this.name}} - {{this.price}} VND</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="quantity${dishIndex}" class="form-label"><strong>Số Lượng</strong></label>
+                    <input type="number" class="form-control" id="quantity${dishIndex}" name="items[${dishIndex}][quantity]" min="1" value="1" required>
+                </div>
+                <div class="col-md-1 d-flex align-items-end">
+                    <button type="button" class="btn btn-danger btn-sm" onclick="removeDish(this)">Xóa</button>
+                </div>
+            `;
+            dishContainer.appendChild(row);
+            dishIndex++;
+        }
+
+        function removeDish(button) {
+            button.closest('.row').remove();
+        }
+    </script>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

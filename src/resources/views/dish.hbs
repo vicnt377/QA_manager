@@ -40,7 +40,7 @@
                 <thead class="table-dark">
                     <tr>
                         <th>STT</th>
-                        <th>Hình ảnh</th>
+                        {{!-- <th>Hình ảnh</th> --}}
                         <th>Tên món</th>
                         <th>Giá</th>
                         <th>Mô tả</th>
@@ -50,11 +50,7 @@
                 <tbody id="dishTable">
                     {{#each dishes}}
                     <tr>
-                        <td>{{@index}}</td>
-                        <td>
-                            <img src="{{this.image}}" alt="{{this.name}}" 
-                            style="width: 50px; height: 50px; object-fit: cover;">
-                        </td>
+                        <td>{{shortId this._id}}</td>
                         <td>{{this.name}}</td>
                         <td>{{this.price}}</td>
                         <td>{{this.description}}</td>
@@ -87,10 +83,10 @@
                             <label for="dishName" class="form-label">Tên món</label>
                             <input type="text" class="form-control" id="dishName" name="name" required>
                         </div>
-                        <div class="mb-3">
+                        {{!-- <div class="mb-3">
                             <label for="dishImage" class="form-label"><b>Hình ảnh</b></label>
                             <input type="file" class="form-control" id="dishImage" name="image" accept="image/*" required>
-                        </div>
+                        </div> --}}
                         <div class="mb-3">
                             <label for="dishPrice" class="form-label">Giá</label>
                             <input type="number" class="form-control" id="dishPrice" name="price" required>
@@ -107,12 +103,6 @@
         </div>
     </div>
 
-<!-- Footer -->
-    <footer class="mt-4 text-center py-3" style="background-color: #343a40; color: white;">
-        <p>Thông tin liên hệ:</p>
-        <p><i class="fa-solid fa-phone"></i> 0123456789</p>
-        <p><i class="fa-solid fa-location-dot"></i> 370 đường 3/2, p.Xuân Khánh, q.Ninh Kiều, tp.Cần Thơ</p>
-    </footer>
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
