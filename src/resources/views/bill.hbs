@@ -6,64 +6,149 @@
     <title>Hóa Đơn</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            background-color: #f8f9fa;
+        }
         .header {
             margin-top: 3rem;
-        }
-        .header h1 {
+            text-align: center;
             color: #ff6200;
+            font-weight: bold;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar .nav-link {
+            color: #fff;
+        }
+        .navbar .nav-link:hover {
+            color: #ff6200;
+        }
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table-bordered {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .table-dark th {
+            background-color: #343a40;
+            color: #fff;
+        }
+        .form-control:disabled {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        .total-amount {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #ff6200;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        .card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fff;
+            margin-bottom: 30px;
+        }
+        .card-header {
+            font-size: 1.5rem;
+            color: #343a40;
             font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="container mt-5 header">
-        <h1 class="text-center">Hóa Đơn</h1>
-        
-        <!-- Thông tin số bàn -->
-        <div class="mb-3">
-            <label for="tableNumber" class="form-label"><strong>Số Bàn</strong></label>
-            <input type="text" class="form-control" id="tableNumber" value="{{bill.tableNumber}}" disabled>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">QUẢN LÝ QUÁN ĂN</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Trang Chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dish/list">Quản Lý Món Ăn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bill/list">Quản Lý Hóa Đơn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/income">Thống Kê</a>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </nav>
 
-        <!-- Danh sách món ăn và số lượng -->
-        <h3>Danh Sách Món Ăn</h3>
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                Hóa Đơn
+            </div>
+            <div class="card-body">
+                <!-- Số bàn -->
+                <div class="mb-3">
+                    <label for="tableNumber" class="form-label"><strong>Số Bàn</strong></label>
+                    <input type="text" class="form-control" id="tableNumber" value="{{bill.tableNumber}}" disabled>
+                </div>
 
-        <div class="text-end mb-3">
-            <a href="/bill/list" class="btn btn-secondary">
-                Danh sách hóa đơn
-            </a>
-        </div>
+                <!-- Ngày tạo -->
+                <div class="mb-3">
+                    <label for="createdAt" class="form-label"><strong>Ngày Tạo</strong></label>
+                    <input type="text" class="form-control" id="createdAt" value="{{formatDate bill.createdAt}}" disabled>
+                </div>
 
-        <table class="table table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th>Tên Món</th>
-                    <th>Số Lượng</th>
-                    <th>Đơn Giá</th>
-                    <th>Tổng Tiền</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each bill.items}}
-                <tr>
-                    <td>{{this.dish.name}}</td>
-                    <td>{{this.quantity}}</td>
-                    <td>{{this.dish.price}} VND</td>
-                    <td>{{multiply this.dish.price this.quantity}} VND</td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
 
-        <!-- Tổng Tiền -->
-        <div class="mb-3">
-            <label for="totalAmount" class="form-label"><strong>Tổng Tiền</strong></label>
-            <input type="text" class="form-control" id="totalAmount" value="{{bill.totalAmount}} VND" disabled>
-        </div>
 
-        <!-- Nút In Hóa Đơn -->
-        <div class="text-center mt-4">
-            <button class="btn btn-success" onclick="window.print()">In Hóa Đơn</button>
+                <!-- Bảng món ăn -->
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Tên Món</th>
+                            <th>Số Lượng</th>
+                            <th>Đơn Giá</th>
+                            <th>Thành Giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each bill.items}}
+                        <tr>
+                            <td>{{this.dish.name}}</td>
+                            <td>{{this.quantity}}</td>
+                            <td>{{this.dish.price}} VND</td>
+                            <td>{{multiply this.dish.price this.quantity}} VND</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+
+                <!-- Tổng Tiền -->
+                <div class="mb-3">
+                    <label for="totalAmount" class="form-label"><strong>Tổng Tiền</strong></label>
+                    <input type="text" class="form-control total-amount" id="totalAmount" value="{{bill.totalAmount}} VND" disabled>
+                </div>
+
+                <!-- Nút In Hóa Đơn -->
+                <div class="text-center mt-4">
+                    <button class="btn btn-success" onclick="window.print()">In Hóa Đơn</button>
+                </div>
+            </div>
         </div>
     </div>
 

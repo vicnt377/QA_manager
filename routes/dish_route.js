@@ -5,24 +5,24 @@ const Dish = require('../models/Dish');
 const dishController = require('../controllers/DishController')
 
 // lấy danh sách món 
-router.get('/list',dishController.getAllDishes)
+router.get('/dish/list',dishController.getAllDishes)
 
 // Route thêm món ăn
-router.post('/add', upload.single('image'), dishController.addDish);
+router.post('/dish/add', upload.single('image'), dishController.addDish);
 
 // Route ẩn món (Món tạm hết)
-router.put('/:id/hide', dishController.hideDish);
+router.put('/dish/:id/hide', dishController.hideDish);
 
 // Route lấy danh sách món tạm hết
-router.get('/hidden', dishController.getHiddenDishes);
+router.get('/dish/hidden', dishController.getHiddenDishes);
 
 // Khôi phục món
-router.put('/restore/:id', dishController.restoreDish);
+router.put('/dish/restore/:id', dishController.restoreDish);
 
 // Hiển thị trang chỉnh sửa món
-router.get('/edit/:id', dishController.editDishPage);
+router.get('/dish/edit/:id', dishController.editDishPage);
 
 // Xử lý cập nhật món
-router.post('/edit/:id', dishController.editDish);
+router.post('/dish/edit/:id', dishController.editDish);
 
 module.exports = router
