@@ -2,6 +2,9 @@ const Bill = require('../models/Bill');
 const Dish = require('../models/Dish');
 const { mutipleMongooseToOject } = require('../src/util/mongoose')
 
+const { utcToZonedTime, format } = require('date-fns-tz');
+
+
 class BillController{
     
     index(req, res, next){
@@ -70,6 +73,36 @@ class BillController{
             next(error);  // Nếu có lỗi, chuyển sang middleware xử lý lỗi
         }
     }
+
+    async showBillDetail(req, res, next) {
+        try {
+            const billId = req.params.id; // Lấy ID hóa đơn từ URL
+            const bill = await Bill.findById(billId).populate('items.dish'); // Tìm hóa đơn và populate các món ăn
+    
+            if (!bill) { // Kiểm tra nếu hóa đơn không tồn tại
+                return res.status(404).json({
+                    success: false,
+                    message: 'Không tìm thấy hóa đơn!'
+                });
+            }
+    
+            // Chuyển đối tượng Mongoose thành plain object
+            const billData = bill.toObject();
+            
+            console.log("Bill Data: ", billData); // Kiểm tra dữ liệu hóa đơn trả về
+
+            // Render view với thông tin hóa đơn
+            res.render('bill_detail', { bill: billData });
+    
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                success: false,
+                message: 'Lỗi khi lấy chi tiết hóa đơn!'
+            });
+        }
+    }
+    
     
     
 }

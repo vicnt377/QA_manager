@@ -6,16 +6,68 @@
     <title>Tạo Hóa Đơn</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <style>
-        .header {
-            margin-top: 3rem;
+        body {
+            background-color: #f8f9fa;
         }
-        .header h1 {
+        .header {
+          
+            text-align: center;
             color: #ff6200;
             font-weight: bold;
         }
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar .nav-link {
+            color: #fff;
+        }
+        .navbar .nav-link:hover {
+            color: #ff6200;
+        }
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table-bordered {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .table-dark th {
+            background-color: #343a40;
+            color: #fff;
+        }
+        .form-control:disabled {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        .total-amount {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #ff6200;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        .card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fff;
+            margin-bottom: 30px;
+        }
+        .card-header {
+            font-size: 1.5rem;
+            color: #343a40;
+            font-weight: bold;
+        }
     </style>
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -30,10 +82,13 @@
                         <a class="nav-link active" aria-current="page" href="/">Trang Chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/dish/list">Quản Lý Món Ăn</a>
+                        <a class="nav-link" href="/employee/list">Nhân Viên</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/bill/list">Quản Lý Hóa Đơn</a>
+                        <a class="nav-link" href="/dish/list">Món Ăn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bill/list">Hóa Đơn</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/income">Thống Kê</a>
@@ -44,8 +99,8 @@
     </nav>
     <div class="container mt-5">
         <!-- Header -->
-        <div class="row header mb-4">
-            <h1 class="text-center">Tạo Hóa Đơn</h1>
+        <div class="row mb-4">
+            <h1 class="text-center header">Tạo Hóa Đơn</h1>
         </div> 
 
         <!-- Form Tạo Hóa Đơn -->
@@ -53,6 +108,7 @@
             <div class="mb-3">
                 <label for="tableNumber" class="form-label"><strong>Số Bàn</strong></label>
                 <input type="text" class="form-control" id="tableNumber" name="tableNumber" placeholder="Nhập số bàn" required>
+                
             </div>
 
             <!-- Món Ăn -->
@@ -60,16 +116,16 @@
                 <div class="row mb-3">
                     <div class="col-md-8">
                         <label for="dish0" class="form-label"><strong>Chọn Món Ăn</strong></label>
-                        <select class="form-select" id="dish0" name="items[0][dish]" required>
+                        <select class="form-select dish-select" id="dish0" name="items[0][dish]" onchange="calculateTotal()" required>
                             <option value="" disabled selected>-- Chọn Món --</option>
                             {{#each dishes}}
-                            <option value="{{this._id}}">{{this.name}} - {{this.price}} VND</option>
+                            <option value="{{this._id}}" data-price="{{this.price}}" >{{this.name}} - {{this.price}} VND</option>
                             {{/each}}
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label for="quantity0" class="form-label"><strong>Số Lượng</strong></label>
-                        <input type="number" class="form-control" id="quantity0" name="items[0][quantity]" min="1" value="1" required>
+                        <input type="number" class="form-control quantity-input" id="quantity0" name="items[0][quantity]" min="1" value="1" onchange="calculateTotal()" required>
                     </div>
                     <div class="col-md-1 d-flex align-items-end">
                         <button type="button" class="btn btn-danger btn-sm" onclick="removeDish(this)">Xóa</button>
@@ -85,8 +141,10 @@
                 <label for="totalAmount" class="form-label"><strong>Tổng Tiền (Tự Động Tính)</strong></label>
                 <input type="text" class="form-control" id="totalAmount" name="totalAmount" disabled>
             </div>
-
-            <button type="submit" class="btn btn-primary">Tạo Hóa Đơn</button>
+            <div class="mb-3 text-center" >
+                <button type="submit" class="btn btn-primary">Tạo Hóa Đơn</button>
+            </div>
+            
         </form>
     </div>
 
@@ -94,6 +152,7 @@
     <script>
         let dishIndex = 1;
 
+        // Thêm món ăn mới
         function addDish() {
             const dishContainer = document.getElementById('dishContainer');
             const row = document.createElement('div');
@@ -101,16 +160,16 @@
             row.innerHTML = `
                 <div class="col-md-8">
                     <label for="dish${dishIndex}" class="form-label"><strong>Chọn Món Ăn</strong></label>
-                    <select class="form-select" id="dish${dishIndex}" name="items[${dishIndex}][dish]" required>
+                    <select class="form-select dish-select" id="dish${dishIndex}" name="items[${dishIndex}][dish]" onchange="calculateTotal()" required>
                         <option value="" disabled selected>-- Chọn Món --</option>
                         {{#each dishes}}
-                        <option value="{{this._id}}">{{this.name}} - {{this.price}} VND</option>
+                        <option value="{{this._id}}" data-price="{{this.price}}">{{this.name}} - {{this.price}} VND</option>
                         {{/each}}
                     </select>
                 </div>
                 <div class="col-md-3">
                     <label for="quantity${dishIndex}" class="form-label"><strong>Số Lượng</strong></label>
-                    <input type="number" class="form-control" id="quantity${dishIndex}" name="items[${dishIndex}][quantity]" min="1" value="1" required>
+                    <input type="number" class="form-control quantity-input" id="quantity${dishIndex}" name="items[${dishIndex}][quantity]" min="1" value="1" onchange="calculateTotal()" required>
                 </div>
                 <div class="col-md-1 d-flex align-items-end">
                     <button type="button" class="btn btn-danger btn-sm" onclick="removeDish(this)">Xóa</button>
@@ -120,9 +179,36 @@
             dishIndex++;
         }
 
+        // Xóa món ăn
         function removeDish(button) {
             button.closest('.row').remove();
+            calculateTotal();
         }
+
+        // Tính tổng tiền
+        function calculateTotal() {
+            let total = 0; // Biến lưu trữ tổng tiền
+
+            // Lấy danh sách tất cả các món ăn và số lượng
+            const dishes = document.querySelectorAll('.dish-select'); // Dropdown món ăn
+            const quantities = document.querySelectorAll('.quantity-input'); // Input số lượng
+
+            // Lặp qua danh sách món ăn
+            dishes.forEach((dish, index) => {
+                // Lấy giá món từ attribute `data-price`
+                const selectedOption = dish.options[dish.selectedIndex]; // Lựa chọn hiện tại
+                const price = selectedOption ? parseInt(selectedOption.getAttribute('data-price')) || 0 : 0; // Giá món
+                const quantity = quantities[index] ? parseInt(quantities[index].value) || 0 : 0; // Số lượng món
+                
+                // Cộng dồn tổng tiền
+                total += price * quantity;
+            });
+
+            // Hiển thị tổng tiền
+            document.getElementById('totalAmount').value = total.toLocaleString('vi-VN') + ' VND';
+        }
+
+
     </script>
 
     <!-- Bootstrap Bundle with Popper -->

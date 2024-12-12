@@ -6,18 +6,97 @@
     <title>Chỉnh Sửa Món Ăn</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .header {
-            margin-top: 3rem;
+        body {
+            background-color: #f8f9fa;
         }
-        .header h1 {
+        .header {
+         
+            text-align: center;
             color: #ff6200;
+            font-weight: bold;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar .nav-link {
+            color: #fff;
+        }
+        .navbar .nav-link:hover {
+            color: #ff6200;
+        }
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table-bordered {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .table-dark th {
+            background-color: #343a40;
+            color: #fff;
+        }
+        .form-control:disabled {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        .total-amount {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #ff6200;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        .card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fff;
+            margin-bottom: 30px;
+        }
+        .card-header {
+            font-size: 1.5rem;
+            color: #343a40;
             font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="container mt-5 header">
-        <h1 class="text-center">Chỉnh Sửa Món Ăn</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">QUẢN LÝ QUÁN ĂN</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Trang Chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/employee/list">Nhân Viên</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dish/list">Món Ăn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bill/list">Hóa Đơn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/income">Thống Kê</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1 class="text-center header">Chỉnh Sửa Món Ăn</h1>
         <form action="/dish/edit/{{dish._id}}" method="POST">
             <div class="mb-3">
                 <label for="dishName" class="form-label">Tên món</label>

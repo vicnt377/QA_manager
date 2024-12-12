@@ -10,7 +10,6 @@
             background-color: #f8f9fa;
         }
         .header {
-            margin-top: 3rem;
             text-align: center;
             color: #ff6200;
             font-weight: bold;
@@ -62,7 +61,7 @@
         }
         .card-header {
             font-size: 1.5rem;
-            color: #343a40;
+            color: #ff6200;
             font-weight: bold;
         }
     </style>
@@ -82,10 +81,13 @@
                         <a class="nav-link active" aria-current="page" href="/">Trang Chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/dish/list">Quản Lý Món Ăn</a>
+                        <a class="nav-link" href="/employee/list">Nhân Viên</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/bill/list">Quản Lý Hóa Đơn</a>
+                        <a class="nav-link" href="/dish/list">Món Ăn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bill/list">Hóa Đơn</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/income">Thống Kê</a>
@@ -145,9 +147,13 @@
                 </div>
 
                 <!-- Nút In Hóa Đơn -->
-                <div class="text-center mt-4">
+                {{!-- <div class="text-center mt-4">
                     <button class="btn btn-success" onclick="window.print()">In Hóa Đơn</button>
+                </div> --}}
+                <div class="text-center mt-4">
+                    <a href="/" class="btn btn-secondary">Quay Lại</a>
                 </div>
+                
             </div>
         </div>
     </div>

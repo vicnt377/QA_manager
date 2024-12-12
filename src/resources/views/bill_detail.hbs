@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Hóa Đơn</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .header {
+            text-align: center;
+            color: #ff6200;
+            font-weight: bold;
+        }
+        .card-title{
+            color: #ff6200;
+        }
+        
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">QUẢN LÝ QUÁN ĂN</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Trang Chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/employee/list">Nhân Viên</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dish/list">Món Ăn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bill/list">Hóa Đơn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/income">Thống Kê</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mb-3">
+        <!-- Header -->
+        <div class="row mb-4">
+            <h1 class="text-center header">Chi Tiết Hóa Đơn</h1>
+        </div>
+
+        <!-- Thông Tin Hóa Đơn -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Thông Tin Hóa Đơn</h5>
+                <p><strong>Số Bàn:</strong> {{bill.tableNumber}}</p>
+                <p><strong>Ngày Tạo:</strong> {{bill.createdAt}}</p>
+                <p><strong>Tổng Tiền:</strong> {{bill.totalAmount}} VND</p>
+            </div>
+        </div>
+
+        <!-- Bảng Chi Tiết Món Ăn -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Chi Tiết Món Ăn</h5>
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Tên Món</th>
+                            <th>Số Lượng</th>
+                            <th>Đơn Giá</th>
+                            <th>Thành Tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each bill.items}}
+                        <tr>
+                            <td>{{this.dish.name}}</td>
+                            <td>{{this.quantity}}</td>
+                            <td>{{this.dish.price}} VND</td>
+                            <td>{{multiply this.dish.price this.quantity}} VND</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Nút Trở Lại -->
+        <div class="text-center mt-4">
+            <a href="/bill/list" class="btn btn-secondary">Quay Lại</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

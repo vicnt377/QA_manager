@@ -7,18 +7,46 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .header h1 {
-            font-size: 3rem;
-            color:  #ff6200;
+        .header {
+            color: #ff6200;
             font-weight: bold;
         }
-
-    
+       
+        
     </style>
+
 </head>
 <body>
-    <div class="container mt-5 header">
-        <h1 class="text-center mb-4">Chỉnh Sửa Nhân Viên</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">QUẢN LÝ QUÁN ĂN</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Trang Chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/employee/list">Nhân Viên</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dish/list">Món Ăn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bill/list">Hóa Đơn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/income">Thống Kê</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 ">
+        <h1 class="text-center mb-4 header">Chỉnh Sửa Nhân Viên</h1>
 
         <form method="post" action="/employee/edit/{{employee._id}}">
             <div class="mb-3">
@@ -33,9 +61,11 @@
                 <label for="employeePosition" class="form-label fw-bold">Vị trí</label>
                 <input type="text" class="form-control" id="employeePosition" name="position" value="{{employee.position}}" required>
             </div>
+            <div class="mb-3 text-center">
+                <button type="submit" class="btn btn-primary ">Lưu Thay Đổi</button>
+                <a href="/employee/list" class="btn btn-secondary">Hủy</a>
 
-            <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
-            <a href="/employee/list" class="btn btn-secondary">Hủy</a>
+            </div>
         </form>
     </div>
 
